@@ -1,0 +1,19 @@
+namespace: t0rr3sp3dr0
+name: nix
+version: 0.0.1
+readme: README.md
+authors:
+  - Pedro Tôrres <t0rr3sp3dr0@gmail.com>
+description: Ansible Collection - t0rr3sp3dr0.nix
+license:
+  - Apache-2.0
+tags:
+  - nix
+  - nixos
+  - nixpkgs
+dependencies: {}
+repository: https://github.com/t0rr3sp3dr0/ansible-collection-nix
+documentation: https://github.com/t0rr3sp3dr0/ansible-collection-nix/tree/master/docs
+homepage: https://t0rr3sp3dr0.github.io/ansible-collection-nix
+issues: https://github.com/t0rr3sp3dr0/ansible-collection-nix/issues
+build_ignore: []
