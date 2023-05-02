@@ -1,6 +1,6 @@
 namespace: t0rr3sp3dr0
 name: nix
-version: 0.0.1
+version: 0.0.2
 readme: README.md
 authors:
   - Pedro Tôrres <t0rr3sp3dr0@gmail.com>
