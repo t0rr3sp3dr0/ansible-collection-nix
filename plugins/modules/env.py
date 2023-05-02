@@ -19,8 +19,6 @@ short_description: manipulate or query Nix user environments
 version_added: 0.0.2
 author:
   - Pedro Tôrres (@t0rr3sp3dr0)
-extends_documentation_fragment:
-  - community.general.attributes
 options:
   config:
     description: Channels config set.

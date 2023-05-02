@@ -19,8 +19,6 @@ short_description: manage Nix channels
 version_added: 0.0.2
 author:
   - Pedro Tôrres (@t0rr3sp3dr0)
-extends_documentation_fragment:
-  - community.general.attributes
 options:
   channels:
     description: URLs of each channel.
