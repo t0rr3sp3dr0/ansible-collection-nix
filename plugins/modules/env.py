@@ -101,16 +101,28 @@ class NixEnv:
             'changed': False
         }
 
-    def make_defexpr(self, config=None, packages=None):
+    def make_config(self, config=None):
         if config is None:
             config = self.module.params['config']
+
+        content = config.encode('utf-8')
+
+        try:
+            with tempfile.NamedTemporaryFile(delete=False) as f:
+                f.write(content)
+                return f.name
+        except Exception as e:
+            msg = str(e)
+            self.module.fail_json(msg)
+
+    def make_defexpr(self, packages=None):
         if packages is None:
             packages = self.module.params['packages']
 
         lblock = []
         iblock = []
         for channel, names in packages.items():
-            lexpr = '{channel} = import <{channel}> {config};'.format(channel=channel, config=config)
+            lexpr = '{channel} = import <{channel}> {args};'.format(channel=channel, args='{}')
             lblock.append(lexpr)
             iexpr = 'inherit ({channel}) {names};'.format(channel=channel, names=' '.join(names))
             iblock.append(iexpr)
@@ -133,7 +145,9 @@ class NixEnv:
             msg = str(e)
             self.module.fail_json(msg)
 
-    def run_install(self, defexpr_path=None):
+    def run_install(self, config_path=None, defexpr_path=None):
+        if config_path is None:
+            config_path = self.make_config()
         if defexpr_path is None:
             defexpr_path = self.make_defexpr()
 
@@ -142,7 +156,7 @@ class NixEnv:
         args = [self.bin_path, *dry_run, '-f', defexpr_path, '-ir']
         self.module.log("'{}'".format("' '".join(args)))
 
-        _, stdout, stderr = self.module.run_command(args, check_rc=True)
+        _, stdout, stderr = self.module.run_command(args, check_rc=True, environ_update={'NIXPKGS_CONFIG': config_path})
         self.module.debug(stdout)
         self.module.debug(stderr)
 
